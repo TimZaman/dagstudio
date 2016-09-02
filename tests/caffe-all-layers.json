@@ -1,0 +1,179 @@
+[
+  {
+    "type": "AbsVal"
+  },
+  {
+    "type": "Accuracy"
+  },
+  {
+    "type": "ArgMax"
+  },
+  {
+    "type": "BNLL"
+  },
+  {
+    "type": "BatchNorm"
+  },
+  {
+    "type": "BatchReindex"
+  },
+  {
+    "type": "Bias"
+  },
+  {
+    "type": "Concat"
+  },
+  {
+    "type": "ContrastiveLoss"
+  },
+  {
+    "type": "Convolution"
+  },
+  {
+    "type": "Crop"
+  },
+  {
+    "type": "Data"
+  },
+  {
+    "type": "Deconvolution"
+  },
+  {
+    "type": "Dropout"
+  },
+  {
+    "type": "DummyData"
+  },
+  {
+    "type": "ELU"
+  },
+  {
+    "type": "Eltwise"
+  },
+  {
+    "type": "Embed"
+  },
+  {
+    "type": "EuclideanLoss"
+  },
+  {
+    "type": "Exp"
+  },
+  {
+    "type": "Filter"
+  },
+  {
+    "type": "Flatten"
+  },
+  {
+    "type": "HDF5Data"
+  },
+  {
+    "type": "HDF5Output"
+  },
+  {
+    "type": "HingeLoss"
+  },
+  {
+    "type": "Im2col"
+  },
+  {
+    "type": "ImageData"
+  },
+  {
+    "type": "InfogainLoss"
+  },
+  {
+    "type": "InnerProduct"
+  },
+  {
+    "type": "Input"
+  },
+  {
+    "type": "LRN"
+  },
+  {
+    "type": "LSTM"
+  },
+  {
+    "type": "LSTMUnit"
+  },
+  {
+    "type": "Log"
+  },
+  {
+    "type": "MVN"
+  },
+  {
+    "type": "MemoryData"
+  },
+  {
+    "type": "MultinomialLogisticLoss"
+  },
+  {
+    "type": "PReLU"
+  },
+  {
+    "type": "Parameter"
+  },
+  {
+    "type": "Pooling"
+  },
+  {
+    "type": "Power"
+  },
+  {
+    "type": "Python"
+  },
+  {
+    "type": "RNN"
+  },
+  {
+    "type": "ReLU"
+  },
+  {
+    "type": "Reduction"
+  },
+  {
+    "type": "Reshape"
+  },
+  {
+    "type": "SPP"
+  },
+  {
+    "type": "Scale"
+  },
+  {
+    "type": "Sigmoid"
+  },
+  {
+    "type": "SigmoidCrossEntropyLoss"
+  },
+  {
+    "type": "Silence"
+  },
+  {
+    "type": "Slice"
+  },
+  {
+    "type": "Softmax"
+  },
+  {
+    "type": "SoftmaxWithLoss"
+  },
+  {
+    "type": "Split"
+  },
+  {
+    "type": "TanH"
+  },
+  {
+    "type": "Threshold"
+  },
+  {
+    "type": "Tile"
+  },
+  {
+    "type": "WindowData"
+  }
+]
