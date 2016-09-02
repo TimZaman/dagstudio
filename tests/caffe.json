@@ -1,0 +1,3074 @@
+{
+  "enums": {
+    "Phase": {
+      "TRAIN": 0,
+      "TEST": 1
+    }
+  },
+  "messages": {
+    "BlobShape": {
+      "fields": {
+        "dim": {
+          "rule": "repeated",
+          "type": "int64",
+          "tag": 1,
+          "options": {
+            "packed": true
+          }
+        }
+      }
+    },
+    "BlobProto": {
+      "fields": {
+        "shape": {
+          "rule": "optional",
+          "type": "BlobShape",
+          "tag": 7
+        },
+        "data": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 5,
+          "options": {
+            "packed": true
+          }
+        },
+        "diff": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 6,
+          "options": {
+            "packed": true
+          }
+        },
+        "double_data": {
+          "rule": "repeated",
+          "type": "double",
+          "tag": 8,
+          "options": {
+            "packed": true
+          }
+        },
+        "double_diff": {
+          "rule": "repeated",
+          "type": "double",
+          "tag": 9,
+          "options": {
+            "packed": true
+          }
+        },
+        "num": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1,
+          "options": {
+            "default": 0
+          }
+        },
+        "channels": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 0
+          }
+        },
+        "height": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3,
+          "options": {
+            "default": 0
+          }
+        },
+        "width": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 4,
+          "options": {
+            "default": 0
+          }
+        }
+      }
+    },
+    "BlobProtoVector": {
+      "fields": {
+        "blobs": {
+          "rule": "repeated",
+          "type": "BlobProto",
+          "tag": 1
+        }
+      }
+    },
+    "Datum": {
+      "fields": {
+        "channels": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1
+        },
+        "height": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2
+        },
+        "width": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3
+        },
+        "data": {
+          "rule": "optional",
+          "type": "bytes",
+          "tag": 4
+        },
+        "label": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 5
+        },
+        "float_data": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 6
+        },
+        "encoded": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 7,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "FillerParameter": {
+      "enums": {
+        "VarianceNorm": {
+          "FAN_IN": 0,
+          "FAN_OUT": 1,
+          "AVERAGE": 2
+        }
+      },
+      "fields": {
+        "type": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1,
+          "options": {
+            "default": "constant"
+          }
+        },
+        "value": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 0
+          }
+        },
+        "min": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 0
+          }
+        },
+        "max": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 4,
+          "options": {
+            "default": 1
+          }
+        },
+        "mean": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 5,
+          "options": {
+            "default": 0
+          }
+        },
+        "std": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 6,
+          "options": {
+            "default": 1
+          }
+        },
+        "sparse": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 7,
+          "options": {
+            "default": -1
+          }
+        },
+        "variance_norm": {
+          "rule": "optional",
+          "type": "VarianceNorm",
+          "tag": 8,
+          "options": {
+            "default": "FAN_IN"
+          }
+        }
+      }
+    },
+    "NetParameter": {
+      "fields": {
+        "name": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "input": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 3
+        },
+        "input_shape": {
+          "rule": "repeated",
+          "type": "BlobShape",
+          "tag": 8
+        },
+        "input_dim": {
+          "rule": "repeated",
+          "type": "int32",
+          "tag": 4
+        },
+        "force_backward": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 5,
+          "options": {
+            "default": false
+          }
+        },
+        "state": {
+          "rule": "optional",
+          "type": "NetState",
+          "tag": 6
+        },
+        "debug_info": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 7,
+          "options": {
+            "default": false
+          }
+        },
+        "layer": {
+          "rule": "repeated",
+          "type": "LayerParameter",
+          "tag": 100
+        },
+        "layers": {
+          "rule": "repeated",
+          "type": "V1LayerParameter",
+          "tag": 2
+        }
+      }
+    },
+    "SolverParameter": {
+      "enums": {
+        "SnapshotFormat": {
+          "HDF5": 0,
+          "BINARYPROTO": 1
+        },
+        "SolverMode": {
+          "CPU": 0,
+          "GPU": 1
+        },
+        "SolverType": {
+          "SGD": 0,
+          "NESTEROV": 1,
+          "ADAGRAD": 2,
+          "RMSPROP": 3,
+          "ADADELTA": 4,
+          "ADAM": 5
+        }
+      },
+      "fields": {
+        "net": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 24
+        },
+        "net_param": {
+          "rule": "optional",
+          "type": "NetParameter",
+          "tag": 25
+        },
+        "train_net": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "test_net": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 2
+        },
+        "train_net_param": {
+          "rule": "optional",
+          "type": "NetParameter",
+          "tag": 21
+        },
+        "test_net_param": {
+          "rule": "repeated",
+          "type": "NetParameter",
+          "tag": 22
+        },
+        "train_state": {
+          "rule": "optional",
+          "type": "NetState",
+          "tag": 26
+        },
+        "test_state": {
+          "rule": "repeated",
+          "type": "NetState",
+          "tag": 27
+        },
+        "test_iter": {
+          "rule": "repeated",
+          "type": "int32",
+          "tag": 3
+        },
+        "test_interval": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 4,
+          "options": {
+            "default": 0
+          }
+        },
+        "test_compute_loss": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 19,
+          "options": {
+            "default": false
+          }
+        },
+        "test_initialization": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 32,
+          "options": {
+            "default": true
+          }
+        },
+        "base_lr": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 5
+        },
+        "display": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 6
+        },
+        "average_loss": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 33,
+          "options": {
+            "default": 1
+          }
+        },
+        "max_iter": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 7
+        },
+        "iter_size": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 36,
+          "options": {
+            "default": 1
+          }
+        },
+        "lr_policy": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 8
+        },
+        "gamma": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 9
+        },
+        "power": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 10
+        },
+        "momentum": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 11
+        },
+        "weight_decay": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 12
+        },
+        "regularization_type": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 29,
+          "options": {
+            "default": "L2"
+          }
+        },
+        "stepsize": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 13
+        },
+        "stepvalue": {
+          "rule": "repeated",
+          "type": "int32",
+          "tag": 34
+        },
+        "clip_gradients": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 35,
+          "options": {
+            "default": -1
+          }
+        },
+        "snapshot": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 14,
+          "options": {
+            "default": 0
+          }
+        },
+        "snapshot_prefix": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 15
+        },
+        "snapshot_diff": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 16,
+          "options": {
+            "default": false
+          }
+        },
+        "snapshot_format": {
+          "rule": "optional",
+          "type": "SnapshotFormat",
+          "tag": 37,
+          "options": {
+            "default": "BINARYPROTO"
+          }
+        },
+        "solver_mode": {
+          "rule": "optional",
+          "type": "SolverMode",
+          "tag": 17,
+          "options": {
+            "default": "GPU"
+          }
+        },
+        "device_id": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 18,
+          "options": {
+            "default": 0
+          }
+        },
+        "random_seed": {
+          "rule": "optional",
+          "type": "int64",
+          "tag": 20,
+          "options": {
+            "default": -1
+          }
+        },
+        "type": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 40,
+          "options": {
+            "default": "SGD"
+          }
+        },
+        "delta": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 31,
+          "options": {
+            "default": 1e-8
+          }
+        },
+        "momentum2": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 39,
+          "options": {
+            "default": 0.999
+          }
+        },
+        "rms_decay": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 38,
+          "options": {
+            "default": 0.99
+          }
+        },
+        "debug_info": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 23,
+          "options": {
+            "default": false
+          }
+        },
+        "snapshot_after_train": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 28,
+          "options": {
+            "default": true
+          }
+        },
+        "solver_type": {
+          "rule": "optional",
+          "type": "SolverType",
+          "tag": 30,
+          "options": {
+            "default": "SGD"
+          }
+        }
+      }
+    },
+    "SolverState": {
+      "fields": {
+        "iter": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1
+        },
+        "learned_net": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 2
+        },
+        "history": {
+          "rule": "repeated",
+          "type": "BlobProto",
+          "tag": 3
+        },
+        "current_step": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 4,
+          "options": {
+            "default": 0
+          }
+        }
+      }
+    },
+    "NetState": {
+      "fields": {
+        "phase": {
+          "rule": "optional",
+          "type": "Phase",
+          "tag": 1,
+          "options": {
+            "default": "TEST"
+          }
+        },
+        "level": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 0
+          }
+        },
+        "stage": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 3
+        }
+      }
+    },
+    "NetStateRule": {
+      "fields": {
+        "phase": {
+          "rule": "optional",
+          "type": "Phase",
+          "tag": 1
+        },
+        "min_level": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2
+        },
+        "max_level": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3
+        },
+        "stage": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 4
+        },
+        "not_stage": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 5
+        }
+      }
+    },
+    "ParamSpec": {
+      "enums": {
+        "DimCheckMode": {
+          "STRICT": 0,
+          "PERMISSIVE": 1
+        }
+      },
+      "fields": {
+        "name": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "share_mode": {
+          "rule": "optional",
+          "type": "DimCheckMode",
+          "tag": 2
+        },
+        "lr_mult": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 1
+          }
+        },
+        "decay_mult": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 4,
+          "options": {
+            "default": 1
+          }
+        }
+      }
+    },
+    "LayerParameter": {
+      "fields": {
+        "name": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "type": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 2
+        },
+        "bottom": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 3
+        },
+        "top": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 4
+        },
+        "phase": {
+          "rule": "optional",
+          "type": "Phase",
+          "tag": 10
+        },
+        "loss_weight": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 5
+        },
+        "param": {
+          "rule": "repeated",
+          "type": "ParamSpec",
+          "tag": 6
+        },
+        "blobs": {
+          "rule": "repeated",
+          "type": "BlobProto",
+          "tag": 7
+        },
+        "propagate_down": {
+          "rule": "repeated",
+          "type": "bool",
+          "tag": 11
+        },
+        "include": {
+          "rule": "repeated",
+          "type": "NetStateRule",
+          "tag": 8
+        },
+        "exclude": {
+          "rule": "repeated",
+          "type": "NetStateRule",
+          "tag": 9
+        },
+        "transform_param": {
+          "rule": "optional",
+          "type": "TransformationParameter",
+          "tag": 100
+        },
+        "loss_param": {
+          "rule": "optional",
+          "type": "LossParameter",
+          "tag": 101
+        },
+        "accuracy_param": {
+          "rule": "optional",
+          "type": "AccuracyParameter",
+          "tag": 102
+        },
+        "argmax_param": {
+          "rule": "optional",
+          "type": "ArgMaxParameter",
+          "tag": 103
+        },
+        "batch_norm_param": {
+          "rule": "optional",
+          "type": "BatchNormParameter",
+          "tag": 139
+        },
+        "bias_param": {
+          "rule": "optional",
+          "type": "BiasParameter",
+          "tag": 141
+        },
+        "concat_param": {
+          "rule": "optional",
+          "type": "ConcatParameter",
+          "tag": 104
+        },
+        "contrastive_loss_param": {
+          "rule": "optional",
+          "type": "ContrastiveLossParameter",
+          "tag": 105
+        },
+        "convolution_param": {
+          "rule": "optional",
+          "type": "ConvolutionParameter",
+          "tag": 106
+        },
+        "crop_param": {
+          "rule": "optional",
+          "type": "CropParameter",
+          "tag": 144
+        },
+        "data_param": {
+          "rule": "optional",
+          "type": "DataParameter",
+          "tag": 107
+        },
+        "dropout_param": {
+          "rule": "optional",
+          "type": "DropoutParameter",
+          "tag": 108
+        },
+        "dummy_data_param": {
+          "rule": "optional",
+          "type": "DummyDataParameter",
+          "tag": 109
+        },
+        "eltwise_param": {
+          "rule": "optional",
+          "type": "EltwiseParameter",
+          "tag": 110
+        },
+        "elu_param": {
+          "rule": "optional",
+          "type": "ELUParameter",
+          "tag": 140
+        },
+        "embed_param": {
+          "rule": "optional",
+          "type": "EmbedParameter",
+          "tag": 137
+        },
+        "exp_param": {
+          "rule": "optional",
+          "type": "ExpParameter",
+          "tag": 111
+        },
+        "flatten_param": {
+          "rule": "optional",
+          "type": "FlattenParameter",
+          "tag": 135
+        },
+        "hdf5_data_param": {
+          "rule": "optional",
+          "type": "HDF5DataParameter",
+          "tag": 112
+        },
+        "hdf5_output_param": {
+          "rule": "optional",
+          "type": "HDF5OutputParameter",
+          "tag": 113
+        },
+        "hinge_loss_param": {
+          "rule": "optional",
+          "type": "HingeLossParameter",
+          "tag": 114
+        },
+        "image_data_param": {
+          "rule": "optional",
+          "type": "ImageDataParameter",
+          "tag": 115
+        },
+        "infogain_loss_param": {
+          "rule": "optional",
+          "type": "InfogainLossParameter",
+          "tag": 116
+        },
+        "inner_product_param": {
+          "rule": "optional",
+          "type": "InnerProductParameter",
+          "tag": 117
+        },
+        "input_param": {
+          "rule": "optional",
+          "type": "InputParameter",
+          "tag": 143
+        },
+        "log_param": {
+          "rule": "optional",
+          "type": "LogParameter",
+          "tag": 134
+        },
+        "lrn_param": {
+          "rule": "optional",
+          "type": "LRNParameter",
+          "tag": 118
+        },
+        "memory_data_param": {
+          "rule": "optional",
+          "type": "MemoryDataParameter",
+          "tag": 119
+        },
+        "mvn_param": {
+          "rule": "optional",
+          "type": "MVNParameter",
+          "tag": 120
+        },
+        "parameter_param": {
+          "rule": "optional",
+          "type": "ParameterParameter",
+          "tag": 145
+        },
+        "pooling_param": {
+          "rule": "optional",
+          "type": "PoolingParameter",
+          "tag": 121
+        },
+        "power_param": {
+          "rule": "optional",
+          "type": "PowerParameter",
+          "tag": 122
+        },
+        "prelu_param": {
+          "rule": "optional",
+          "type": "PReLUParameter",
+          "tag": 131
+        },
+        "python_param": {
+          "rule": "optional",
+          "type": "PythonParameter",
+          "tag": 130
+        },
+        "recurrent_param": {
+          "rule": "optional",
+          "type": "RecurrentParameter",
+          "tag": 146
+        },
+        "reduction_param": {
+          "rule": "optional",
+          "type": "ReductionParameter",
+          "tag": 136
+        },
+        "relu_param": {
+          "rule": "optional",
+          "type": "ReLUParameter",
+          "tag": 123
+        },
+        "reshape_param": {
+          "rule": "optional",
+          "type": "ReshapeParameter",
+          "tag": 133
+        },
+        "scale_param": {
+          "rule": "optional",
+          "type": "ScaleParameter",
+          "tag": 142
+        },
+        "sigmoid_param": {
+          "rule": "optional",
+          "type": "SigmoidParameter",
+          "tag": 124
+        },
+        "softmax_param": {
+          "rule": "optional",
+          "type": "SoftmaxParameter",
+          "tag": 125
+        },
+        "spp_param": {
+          "rule": "optional",
+          "type": "SPPParameter",
+          "tag": 132
+        },
+        "slice_param": {
+          "rule": "optional",
+          "type": "SliceParameter",
+          "tag": 126
+        },
+        "tanh_param": {
+          "rule": "optional",
+          "type": "TanHParameter",
+          "tag": 127
+        },
+        "threshold_param": {
+          "rule": "optional",
+          "type": "ThresholdParameter",
+          "tag": 128
+        },
+        "tile_param": {
+          "rule": "optional",
+          "type": "TileParameter",
+          "tag": 138
+        },
+        "window_data_param": {
+          "rule": "optional",
+          "type": "WindowDataParameter",
+          "tag": 129
+        }
+      }
+    },
+    "TransformationParameter": {
+      "fields": {
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "mirror": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2,
+          "options": {
+            "default": false
+          }
+        },
+        "crop_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 3,
+          "options": {
+            "default": 0
+          }
+        },
+        "mean_file": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 4
+        },
+        "mean_value": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 5
+        },
+        "force_color": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 6,
+          "options": {
+            "default": false
+          }
+        },
+        "force_gray": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 7,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "LossParameter": {
+      "enums": {
+        "NormalizationMode": {
+          "FULL": 0,
+          "VALID": 1,
+          "BATCH_SIZE": 2,
+          "NONE": 3
+        }
+      },
+      "fields": {
+        "ignore_label": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1
+        },
+        "normalization": {
+          "rule": "optional",
+          "type": "NormalizationMode",
+          "tag": 3,
+          "options": {
+            "default": "VALID"
+          }
+        },
+        "normalize": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2
+        }
+      }
+    },
+    "AccuracyParameter": {
+      "fields": {
+        "top_k": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "ignore_label": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3
+        }
+      }
+    },
+    "ArgMaxParameter": {
+      "fields": {
+        "out_max_val": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 1,
+          "options": {
+            "default": false
+          }
+        },
+        "top_k": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3
+        }
+      }
+    },
+    "ConcatParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "concat_dim": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        }
+      }
+    },
+    "BatchNormParameter": {
+      "fields": {
+        "use_global_stats": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 1
+        },
+        "moving_average_fraction": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 0.999
+          }
+        },
+        "eps": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 0.00001
+          }
+        }
+      }
+    },
+    "BiasParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "num_axes": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 3
+        }
+      }
+    },
+    "ContrastiveLossParameter": {
+      "fields": {
+        "margin": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "legacy_version": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "ConvolutionParameter": {
+      "enums": {
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "num_output": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1
+        },
+        "bias_term": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2,
+          "options": {
+            "default": true
+          }
+        },
+        "pad": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 3
+        },
+        "kernel_size": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 4
+        },
+        "stride": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 6
+        },
+        "dilation": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 18
+        },
+        "pad_h": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 9,
+          "options": {
+            "default": 0
+          }
+        },
+        "pad_w": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 10,
+          "options": {
+            "default": 0
+          }
+        },
+        "kernel_h": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 11
+        },
+        "kernel_w": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 12
+        },
+        "stride_h": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 13
+        },
+        "stride_w": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 14
+        },
+        "group": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 5,
+          "options": {
+            "default": 1
+          }
+        },
+        "weight_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 7
+        },
+        "bias_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 8
+        },
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 15,
+          "options": {
+            "default": "DEFAULT"
+          }
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 16,
+          "options": {
+            "default": 1
+          }
+        },
+        "force_nd_im2col": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 17,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "CropParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1,
+          "options": {
+            "default": 2
+          }
+        },
+        "offset": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 2
+        }
+      }
+    },
+    "DataParameter": {
+      "enums": {
+        "DB": {
+          "LEVELDB": 0,
+          "LMDB": 1
+        }
+      },
+      "fields": {
+        "source": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "batch_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 4
+        },
+        "rand_skip": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 7,
+          "options": {
+            "default": 0
+          }
+        },
+        "backend": {
+          "rule": "optional",
+          "type": "DB",
+          "tag": 8,
+          "options": {
+            "default": "LEVELDB"
+          }
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "mean_file": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 3
+        },
+        "crop_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 5,
+          "options": {
+            "default": 0
+          }
+        },
+        "mirror": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 6,
+          "options": {
+            "default": false
+          }
+        },
+        "force_encoded_color": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 9,
+          "options": {
+            "default": false
+          }
+        },
+        "prefetch": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 10,
+          "options": {
+            "default": 4
+          }
+        }
+      }
+    },
+    "DropoutParameter": {
+      "fields": {
+        "dropout_ratio": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 0.5
+          }
+        }
+      }
+    },
+    "DummyDataParameter": {
+      "fields": {
+        "data_filler": {
+          "rule": "repeated",
+          "type": "FillerParameter",
+          "tag": 1
+        },
+        "shape": {
+          "rule": "repeated",
+          "type": "BlobShape",
+          "tag": 6
+        },
+        "num": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 2
+        },
+        "channels": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 3
+        },
+        "height": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 4
+        },
+        "width": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 5
+        }
+      }
+    },
+    "EltwiseParameter": {
+      "enums": {
+        "EltwiseOp": {
+          "PROD": 0,
+          "SUM": 1,
+          "MAX": 2
+        }
+      },
+      "fields": {
+        "operation": {
+          "rule": "optional",
+          "type": "EltwiseOp",
+          "tag": 1,
+          "options": {
+            "default": "SUM"
+          }
+        },
+        "coeff": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 2
+        },
+        "stable_prod_grad": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 3,
+          "options": {
+            "default": true
+          }
+        }
+      }
+    },
+    "ELUParameter": {
+      "fields": {
+        "alpha": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        }
+      }
+    },
+    "EmbedParameter": {
+      "fields": {
+        "num_output": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1
+        },
+        "input_dim": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 2
+        },
+        "bias_term": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 3,
+          "options": {
+            "default": true
+          }
+        },
+        "weight_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 4
+        },
+        "bias_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 5
+        }
+      }
+    },
+    "ExpParameter": {
+      "fields": {
+        "base": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": -1
+          }
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "shift": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 0
+          }
+        }
+      }
+    },
+    "FlattenParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "end_axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": -1
+          }
+        }
+      }
+    },
+    "HDF5DataParameter": {
+      "fields": {
+        "source": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "batch_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 2
+        },
+        "shuffle": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 3,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "HDF5OutputParameter": {
+      "fields": {
+        "file_name": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        }
+      }
+    },
+    "HingeLossParameter": {
+      "enums": {
+        "Norm": {
+          "L1": 1,
+          "L2": 2
+        }
+      },
+      "fields": {
+        "norm": {
+          "rule": "optional",
+          "type": "Norm",
+          "tag": 1,
+          "options": {
+            "default": "L1"
+          }
+        }
+      }
+    },
+    "ImageDataParameter": {
+      "fields": {
+        "source": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "batch_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 4,
+          "options": {
+            "default": 1
+          }
+        },
+        "rand_skip": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 7,
+          "options": {
+            "default": 0
+          }
+        },
+        "shuffle": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 8,
+          "options": {
+            "default": false
+          }
+        },
+        "new_height": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 9,
+          "options": {
+            "default": 0
+          }
+        },
+        "new_width": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 10,
+          "options": {
+            "default": 0
+          }
+        },
+        "is_color": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 11,
+          "options": {
+            "default": true
+          }
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "mean_file": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 3
+        },
+        "crop_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 5,
+          "options": {
+            "default": 0
+          }
+        },
+        "mirror": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 6,
+          "options": {
+            "default": false
+          }
+        },
+        "root_folder": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 12,
+          "options": {
+            "default": ""
+          }
+        }
+      }
+    },
+    "InfogainLossParameter": {
+      "fields": {
+        "source": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        }
+      }
+    },
+    "InnerProductParameter": {
+      "fields": {
+        "num_output": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1
+        },
+        "bias_term": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2,
+          "options": {
+            "default": true
+          }
+        },
+        "weight_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 3
+        },
+        "bias_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 4
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 5,
+          "options": {
+            "default": 1
+          }
+        },
+        "transpose": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 6,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "InputParameter": {
+      "fields": {
+        "shape": {
+          "rule": "repeated",
+          "type": "BlobShape",
+          "tag": 1
+        }
+      }
+    },
+    "LogParameter": {
+      "fields": {
+        "base": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": -1
+          }
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "shift": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 0
+          }
+        }
+      }
+    },
+    "LRNParameter": {
+      "enums": {
+        "NormRegion": {
+          "ACROSS_CHANNELS": 0,
+          "WITHIN_CHANNEL": 1
+        },
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "local_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1,
+          "options": {
+            "default": 5
+          }
+        },
+        "alpha": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "beta": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 0.75
+          }
+        },
+        "norm_region": {
+          "rule": "optional",
+          "type": "NormRegion",
+          "tag": 4,
+          "options": {
+            "default": "ACROSS_CHANNELS"
+          }
+        },
+        "k": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 5,
+          "options": {
+            "default": 1
+          }
+        },
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 6,
+          "options": {
+            "default": "DEFAULT"
+          }
+        }
+      }
+    },
+    "MemoryDataParameter": {
+      "fields": {
+        "batch_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1
+        },
+        "channels": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 2
+        },
+        "height": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 3
+        },
+        "width": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 4
+        }
+      }
+    },
+    "MVNParameter": {
+      "fields": {
+        "normalize_variance": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 1,
+          "options": {
+            "default": true
+          }
+        },
+        "across_channels": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2,
+          "options": {
+            "default": false
+          }
+        },
+        "eps": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 1e-9
+          }
+        }
+      }
+    },
+    "ParameterParameter": {
+      "fields": {
+        "shape": {
+          "rule": "optional",
+          "type": "BlobShape",
+          "tag": 1
+        }
+      }
+    },
+    "PoolingParameter": {
+      "enums": {
+        "PoolMethod": {
+          "MAX": 0,
+          "AVE": 1,
+          "STOCHASTIC": 2
+        },
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "pool": {
+          "rule": "optional",
+          "type": "PoolMethod",
+          "tag": 1,
+          "options": {
+            "default": "MAX"
+          }
+        },
+        "pad": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 4,
+          "options": {
+            "default": 0
+          }
+        },
+        "pad_h": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 9,
+          "options": {
+            "default": 0
+          }
+        },
+        "pad_w": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 10,
+          "options": {
+            "default": 0
+          }
+        },
+        "kernel_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 2
+        },
+        "kernel_h": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 5
+        },
+        "kernel_w": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 6
+        },
+        "stride": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 3,
+          "options": {
+            "default": 1
+          }
+        },
+        "stride_h": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 7
+        },
+        "stride_w": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 8
+        },
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 11,
+          "options": {
+            "default": "DEFAULT"
+          }
+        },
+        "global_pooling": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 12,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "PowerParameter": {
+      "fields": {
+        "power": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "shift": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 0
+          }
+        }
+      }
+    },
+    "PythonParameter": {
+      "fields": {
+        "module": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "layer": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 2
+        },
+        "param_str": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 3,
+          "options": {
+            "default": ""
+          }
+        },
+        "share_in_parallel": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 4,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "RecurrentParameter": {
+      "fields": {
+        "num_output": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1,
+          "options": {
+            "default": 0
+          }
+        },
+        "weight_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 2
+        },
+        "bias_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 3
+        },
+        "debug_info": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 4,
+          "options": {
+            "default": false
+          }
+        },
+        "expose_hidden": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 5,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    },
+    "ReductionParameter": {
+      "enums": {
+        "ReductionOp": {
+          "SUM": 1,
+          "ASUM": 2,
+          "SUMSQ": 3,
+          "MEAN": 4
+        }
+      },
+      "fields": {
+        "operation": {
+          "rule": "optional",
+          "type": "ReductionOp",
+          "tag": 1,
+          "options": {
+            "default": "SUM"
+          }
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 0
+          }
+        },
+        "coeff": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 3,
+          "options": {
+            "default": 1
+          }
+        }
+      }
+    },
+    "ReLUParameter": {
+      "enums": {
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "negative_slope": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 0
+          }
+        },
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 2,
+          "options": {
+            "default": "DEFAULT"
+          }
+        }
+      }
+    },
+    "ReshapeParameter": {
+      "fields": {
+        "shape": {
+          "rule": "optional",
+          "type": "BlobShape",
+          "tag": 1
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 0
+          }
+        },
+        "num_axes": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3,
+          "options": {
+            "default": -1
+          }
+        }
+      }
+    },
+    "ScaleParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "num_axes": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 3
+        },
+        "bias_term": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 4,
+          "options": {
+            "default": false
+          }
+        },
+        "bias_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 5
+        }
+      }
+    },
+    "SigmoidParameter": {
+      "enums": {
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 1,
+          "options": {
+            "default": "DEFAULT"
+          }
+        }
+      }
+    },
+    "SliceParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 3,
+          "options": {
+            "default": 1
+          }
+        },
+        "slice_point": {
+          "rule": "repeated",
+          "type": "uint32",
+          "tag": 2
+        },
+        "slice_dim": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        }
+      }
+    },
+    "SoftmaxParameter": {
+      "enums": {
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 1,
+          "options": {
+            "default": "DEFAULT"
+          }
+        },
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        }
+      }
+    },
+    "TanHParameter": {
+      "enums": {
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 1,
+          "options": {
+            "default": "DEFAULT"
+          }
+        }
+      }
+    },
+    "TileParameter": {
+      "fields": {
+        "axis": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 1,
+          "options": {
+            "default": 1
+          }
+        },
+        "tiles": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 2
+        }
+      }
+    },
+    "ThresholdParameter": {
+      "fields": {
+        "threshold": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 1,
+          "options": {
+            "default": 0
+          }
+        }
+      }
+    },
+    "WindowDataParameter": {
+      "fields": {
+        "source": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 2,
+          "options": {
+            "default": 1
+          }
+        },
+        "mean_file": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 3
+        },
+        "batch_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 4
+        },
+        "crop_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 5,
+          "options": {
+            "default": 0
+          }
+        },
+        "mirror": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 6,
+          "options": {
+            "default": false
+          }
+        },
+        "fg_threshold": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 7,
+          "options": {
+            "default": 0.5
+          }
+        },
+        "bg_threshold": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 8,
+          "options": {
+            "default": 0.5
+          }
+        },
+        "fg_fraction": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 9,
+          "options": {
+            "default": 0.25
+          }
+        },
+        "context_pad": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 10,
+          "options": {
+            "default": 0
+          }
+        },
+        "crop_mode": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 11,
+          "options": {
+            "default": "warp"
+          }
+        },
+        "cache_images": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 12,
+          "options": {
+            "default": false
+          }
+        },
+        "root_folder": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 13,
+          "options": {
+            "default": ""
+          }
+        }
+      }
+    },
+    "SPPParameter": {
+      "enums": {
+        "PoolMethod": {
+          "MAX": 0,
+          "AVE": 1,
+          "STOCHASTIC": 2
+        },
+        "Engine": {
+          "DEFAULT": 0,
+          "CAFFE": 1,
+          "CUDNN": 2
+        }
+      },
+      "fields": {
+        "pyramid_height": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 1
+        },
+        "pool": {
+          "rule": "optional",
+          "type": "PoolMethod",
+          "tag": 2,
+          "options": {
+            "default": "MAX"
+          }
+        },
+        "engine": {
+          "rule": "optional",
+          "type": "Engine",
+          "tag": 6,
+          "options": {
+            "default": "DEFAULT"
+          }
+        }
+      }
+    },
+    "V1LayerParameter": {
+      "enums": {
+        "LayerType": {
+          "NONE": 0,
+          "ABSVAL": 35,
+          "ACCURACY": 1,
+          "ARGMAX": 30,
+          "BNLL": 2,
+          "CONCAT": 3,
+          "CONTRASTIVE_LOSS": 37,
+          "CONVOLUTION": 4,
+          "DATA": 5,
+          "DECONVOLUTION": 39,
+          "DROPOUT": 6,
+          "DUMMY_DATA": 32,
+          "EUCLIDEAN_LOSS": 7,
+          "ELTWISE": 25,
+          "EXP": 38,
+          "FLATTEN": 8,
+          "HDF5_DATA": 9,
+          "HDF5_OUTPUT": 10,
+          "HINGE_LOSS": 28,
+          "IM2COL": 11,
+          "IMAGE_DATA": 12,
+          "INFOGAIN_LOSS": 13,
+          "INNER_PRODUCT": 14,
+          "LRN": 15,
+          "MEMORY_DATA": 29,
+          "MULTINOMIAL_LOGISTIC_LOSS": 16,
+          "MVN": 34,
+          "POOLING": 17,
+          "POWER": 26,
+          "RELU": 18,
+          "SIGMOID": 19,
+          "SIGMOID_CROSS_ENTROPY_LOSS": 27,
+          "SILENCE": 36,
+          "SOFTMAX": 20,
+          "SOFTMAX_LOSS": 21,
+          "SPLIT": 22,
+          "SLICE": 33,
+          "TANH": 23,
+          "WINDOW_DATA": 24,
+          "THRESHOLD": 31
+        },
+        "DimCheckMode": {
+          "STRICT": 0,
+          "PERMISSIVE": 1
+        }
+      },
+      "fields": {
+        "bottom": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 2
+        },
+        "top": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 3
+        },
+        "name": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 4
+        },
+        "include": {
+          "rule": "repeated",
+          "type": "NetStateRule",
+          "tag": 32
+        },
+        "exclude": {
+          "rule": "repeated",
+          "type": "NetStateRule",
+          "tag": 33
+        },
+        "type": {
+          "rule": "optional",
+          "type": "LayerType",
+          "tag": 5
+        },
+        "blobs": {
+          "rule": "repeated",
+          "type": "BlobProto",
+          "tag": 6
+        },
+        "param": {
+          "rule": "repeated",
+          "type": "string",
+          "tag": 1001
+        },
+        "blob_share_mode": {
+          "rule": "repeated",
+          "type": "DimCheckMode",
+          "tag": 1002
+        },
+        "blobs_lr": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 7
+        },
+        "weight_decay": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 8
+        },
+        "loss_weight": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 35
+        },
+        "accuracy_param": {
+          "rule": "optional",
+          "type": "AccuracyParameter",
+          "tag": 27
+        },
+        "argmax_param": {
+          "rule": "optional",
+          "type": "ArgMaxParameter",
+          "tag": 23
+        },
+        "concat_param": {
+          "rule": "optional",
+          "type": "ConcatParameter",
+          "tag": 9
+        },
+        "contrastive_loss_param": {
+          "rule": "optional",
+          "type": "ContrastiveLossParameter",
+          "tag": 40
+        },
+        "convolution_param": {
+          "rule": "optional",
+          "type": "ConvolutionParameter",
+          "tag": 10
+        },
+        "data_param": {
+          "rule": "optional",
+          "type": "DataParameter",
+          "tag": 11
+        },
+        "dropout_param": {
+          "rule": "optional",
+          "type": "DropoutParameter",
+          "tag": 12
+        },
+        "dummy_data_param": {
+          "rule": "optional",
+          "type": "DummyDataParameter",
+          "tag": 26
+        },
+        "eltwise_param": {
+          "rule": "optional",
+          "type": "EltwiseParameter",
+          "tag": 24
+        },
+        "exp_param": {
+          "rule": "optional",
+          "type": "ExpParameter",
+          "tag": 41
+        },
+        "hdf5_data_param": {
+          "rule": "optional",
+          "type": "HDF5DataParameter",
+          "tag": 13
+        },
+        "hdf5_output_param": {
+          "rule": "optional",
+          "type": "HDF5OutputParameter",
+          "tag": 14
+        },
+        "hinge_loss_param": {
+          "rule": "optional",
+          "type": "HingeLossParameter",
+          "tag": 29
+        },
+        "image_data_param": {
+          "rule": "optional",
+          "type": "ImageDataParameter",
+          "tag": 15
+        },
+        "infogain_loss_param": {
+          "rule": "optional",
+          "type": "InfogainLossParameter",
+          "tag": 16
+        },
+        "inner_product_param": {
+          "rule": "optional",
+          "type": "InnerProductParameter",
+          "tag": 17
+        },
+        "lrn_param": {
+          "rule": "optional",
+          "type": "LRNParameter",
+          "tag": 18
+        },
+        "memory_data_param": {
+          "rule": "optional",
+          "type": "MemoryDataParameter",
+          "tag": 22
+        },
+        "mvn_param": {
+          "rule": "optional",
+          "type": "MVNParameter",
+          "tag": 34
+        },
+        "pooling_param": {
+          "rule": "optional",
+          "type": "PoolingParameter",
+          "tag": 19
+        },
+        "power_param": {
+          "rule": "optional",
+          "type": "PowerParameter",
+          "tag": 21
+        },
+        "relu_param": {
+          "rule": "optional",
+          "type": "ReLUParameter",
+          "tag": 30
+        },
+        "sigmoid_param": {
+          "rule": "optional",
+          "type": "SigmoidParameter",
+          "tag": 38
+        },
+        "softmax_param": {
+          "rule": "optional",
+          "type": "SoftmaxParameter",
+          "tag": 39
+        },
+        "slice_param": {
+          "rule": "optional",
+          "type": "SliceParameter",
+          "tag": 31
+        },
+        "tanh_param": {
+          "rule": "optional",
+          "type": "TanHParameter",
+          "tag": 37
+        },
+        "threshold_param": {
+          "rule": "optional",
+          "type": "ThresholdParameter",
+          "tag": 25
+        },
+        "window_data_param": {
+          "rule": "optional",
+          "type": "WindowDataParameter",
+          "tag": 20
+        },
+        "transform_param": {
+          "rule": "optional",
+          "type": "TransformationParameter",
+          "tag": 36
+        },
+        "loss_param": {
+          "rule": "optional",
+          "type": "LossParameter",
+          "tag": 42
+        },
+        "layer": {
+          "rule": "optional",
+          "type": "V0LayerParameter",
+          "tag": 1
+        }
+      }
+    },
+    "V0LayerParameter": {
+      "enums": {
+        "PoolMethod": {
+          "MAX": 0,
+          "AVE": 1,
+          "STOCHASTIC": 2
+        }
+      },
+      "fields": {
+        "name": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 1
+        },
+        "type": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 2
+        },
+        "num_output": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 3
+        },
+        "biasterm": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 4,
+          "options": {
+            "default": true
+          }
+        },
+        "weight_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 5
+        },
+        "bias_filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 6
+        },
+        "pad": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 7,
+          "options": {
+            "default": 0
+          }
+        },
+        "kernelsize": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 8
+        },
+        "group": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 9,
+          "options": {
+            "default": 1
+          }
+        },
+        "stride": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 10,
+          "options": {
+            "default": 1
+          }
+        },
+        "pool": {
+          "rule": "optional",
+          "type": "PoolMethod",
+          "tag": 11,
+          "options": {
+            "default": "MAX"
+          }
+        },
+        "dropout_ratio": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 12,
+          "options": {
+            "default": 0.5
+          }
+        },
+        "local_size": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 13,
+          "options": {
+            "default": 5
+          }
+        },
+        "alpha": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 14,
+          "options": {
+            "default": 1
+          }
+        },
+        "beta": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 15,
+          "options": {
+            "default": 0.75
+          }
+        },
+        "k": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 22,
+          "options": {
+            "default": 1
+          }
+        },
+        "source": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 16
+        },
+        "scale": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 17,
+          "options": {
+            "default": 1
+          }
+        },
+        "meanfile": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 18
+        },
+        "batchsize": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 19
+        },
+        "cropsize": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 20,
+          "options": {
+            "default": 0
+          }
+        },
+        "mirror": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 21,
+          "options": {
+            "default": false
+          }
+        },
+        "blobs": {
+          "rule": "repeated",
+          "type": "BlobProto",
+          "tag": 50
+        },
+        "blobs_lr": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 51
+        },
+        "weight_decay": {
+          "rule": "repeated",
+          "type": "float",
+          "tag": 52
+        },
+        "rand_skip": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 53,
+          "options": {
+            "default": 0
+          }
+        },
+        "det_fg_threshold": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 54,
+          "options": {
+            "default": 0.5
+          }
+        },
+        "det_bg_threshold": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 55,
+          "options": {
+            "default": 0.5
+          }
+        },
+        "det_fg_fraction": {
+          "rule": "optional",
+          "type": "float",
+          "tag": 56,
+          "options": {
+            "default": 0.25
+          }
+        },
+        "det_context_pad": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 58,
+          "options": {
+            "default": 0
+          }
+        },
+        "det_crop_mode": {
+          "rule": "optional",
+          "type": "string",
+          "tag": 59,
+          "options": {
+            "default": "warp"
+          }
+        },
+        "new_num": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 60,
+          "options": {
+            "default": 0
+          }
+        },
+        "new_channels": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 61,
+          "options": {
+            "default": 0
+          }
+        },
+        "new_height": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 62,
+          "options": {
+            "default": 0
+          }
+        },
+        "new_width": {
+          "rule": "optional",
+          "type": "int32",
+          "tag": 63,
+          "options": {
+            "default": 0
+          }
+        },
+        "shuffle_images": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 64,
+          "options": {
+            "default": false
+          }
+        },
+        "concat_dim": {
+          "rule": "optional",
+          "type": "uint32",
+          "tag": 65,
+          "options": {
+            "default": 1
+          }
+        },
+        "hdf5_output_param": {
+          "rule": "optional",
+          "type": "HDF5OutputParameter",
+          "tag": 1001
+        }
+      }
+    },
+    "PReLUParameter": {
+      "fields": {
+        "filler": {
+          "rule": "optional",
+          "type": "FillerParameter",
+          "tag": 1
+        },
+        "channel_shared": {
+          "rule": "optional",
+          "type": "bool",
+          "tag": 2,
+          "options": {
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "package": "caffe"
+}
