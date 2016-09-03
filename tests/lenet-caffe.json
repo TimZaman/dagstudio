@@ -1,0 +1,200 @@
+{
+    "input": [
+        "data"
+    ],
+    "layer": [
+        {
+            "top": [
+                "scaled"
+            ],
+            "type": "Power",
+            "name": "scale",
+            "power_param": {
+                "scale": 0.0125000001863
+            },
+            "bottom": [
+                "data"
+            ]
+        },
+        {
+            "name": "conv1",
+            "bottom": [
+                "scaled"
+            ],
+            "top": [
+                "conv1"
+            ],
+            "param": [
+                {
+                    "lr_mult": 1.0
+                },
+                {
+                    "lr_mult": 2.0
+                }
+            ],
+            "convolution_param": {
+                "weight_filler": {
+                    "type": "xavier"
+                },
+                "stride": [
+                    1
+                ],
+                "bias_filler": {
+                    "type": "constant"
+                },
+                "kernel_size": [
+                    5
+                ],
+                "num_output": 20
+            },
+            "type": "Convolution"
+        },
+        {
+            "pooling_param": {
+                "stride": 2,
+                "kernel_size": 2,
+                "pool": 0
+            },
+            "top": [
+                "pool1"
+            ],
+            "type": "Pooling",
+            "name": "pool1",
+            "bottom": [
+                "conv1"
+            ]
+        },
+        {
+            "name": "conv2",
+            "bottom": [
+                "pool1"
+            ],
+            "top": [
+                "conv2"
+            ],
+            "param": [
+                {
+                    "lr_mult": 1.0
+                },
+                {
+                    "lr_mult": 2.0
+                }
+            ],
+            "convolution_param": {
+                "weight_filler": {
+                    "type": "xavier"
+                },
+                "stride": [
+                    1
+                ],
+                "bias_filler": {
+                    "type": "constant"
+                },
+                "kernel_size": [
+                    5
+                ],
+                "num_output": 50
+            },
+            "type": "Convolution"
+        },
+        {
+            "pooling_param": {
+                "stride": 2,
+                "kernel_size": 2,
+                "pool": 0
+            },
+            "top": [
+                "pool2"
+            ],
+            "type": "Pooling",
+            "name": "pool2",
+            "bottom": [
+                "conv2"
+            ]
+        },
+        {
+            "name": "ip1",
+            "bottom": [
+                "pool2"
+            ],
+            "inner_product_param": {
+                "weight_filler": {
+                    "type": "xavier"
+                },
+                "bias_filler": {
+                    "type": "constant"
+                },
+                "num_output": 500
+            },
+            "top": [
+                "ip1"
+            ],
+            "param": [
+                {
+                    "lr_mult": 1.0
+                },
+                {
+                    "lr_mult": 2.0
+                }
+            ],
+            "type": "InnerProduct"
+        },
+        {
+            "top": [
+                "ip1"
+            ],
+            "type": "ReLU",
+            "name": "relu1",
+            "bottom": [
+                "ip1"
+            ]
+        },
+        {
+            "name": "ip2",
+            "bottom": [
+                "ip1"
+            ],
+            "inner_product_param": {
+                "weight_filler": {
+                    "type": "xavier"
+                },
+                "bias_filler": {
+                    "type": "constant"
+                },
+                "num_output": 10
+            },
+            "top": [
+                "ip2"
+            ],
+            "param": [
+                {
+                    "lr_mult": 1.0
+                },
+                {
+                    "lr_mult": 2.0
+                }
+            ],
+            "type": "InnerProduct"
+        },
+        {
+            "top": [
+                "softmax"
+            ],
+            "type": "Softmax",
+            "name": "softmax",
+            "bottom": [
+                "ip2"
+            ]
+        }
+    ],
+    "input_shape": [
+        {
+            "dim": [
+                1,
+                1,
+                28,
+                28
+            ]
+        }
+    ]
+}

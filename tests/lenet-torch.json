@@ -1,0 +1,138 @@
+{
+  "links": [ {
+    "source": {
+      "index": 1,
+      "type": "nn.Sequential"
+    },
+    "target": {
+      "index": 2,
+      "type": "nn.MulConstant"
+    }
+  }, {
+    "source": {
+      "index": 2,
+      "type": "nn.MulConstant"
+    },
+    "target": {
+      "index": 3,
+      "type": "nn.SpatialConvolution"
+    }
+  }, {
+    "source": {
+      "index": 3,
+      "type": "nn.SpatialConvolution"
+    },
+    "target": {
+      "index": 4,
+      "type": "nn.SpatialMaxPooling"
+    }
+  }, {
+    "source": {
+      "index": 4,
+      "type": "nn.SpatialMaxPooling"
+    },
+    "target": {
+      "index": 5,
+      "type": "nn.SpatialConvolution"
+    }
+  }, {
+    "source": {
+      "index": 5,
+      "type": "nn.SpatialConvolution"
+    },
+    "target": {
+      "index": 6,
+      "type": "nn.SpatialMaxPooling"
+    }
+  }, {
+    "source": {
+      "index": 6,
+      "type": "nn.SpatialMaxPooling"
+    },
+    "target": {
+      "index": 7,
+      "type": "nn.View"
+    }
+  }, {
+    "source": {
+      "index": 7,
+      "type": "nn.View"
+    },
+    "target": {
+      "index": 8,
+      "type": "nn.Linear"
+    }
+  }, {
+    "source": {
+      "index": 8,
+      "type": "nn.Linear"
+    },
+    "target": {
+      "index": 9,
+      "type": "nn.ReLU"
+    }
+  }, {
+    "source": {
+      "index": 9,
+      "type": "nn.ReLU"
+    },
+    "target": {
+      "index": 10,
+      "type": "nn.Linear"
+    }
+  }, {
+    "source": {
+      "index": 10,
+      "type": "nn.Linear"
+    },
+    "target": {
+      "index": 11,
+      "type": "nn.LogSoftMax"
+    }
+  } ],
+  "nodes": [ {
+    "chain": "_0",
+    "index": 1,
+    "type": "nn.Sequential"
+  }, {
+    "chain": "_0_1",
+    "index": 2,
+    "type": "nn.MulConstant"
+  }, {
+    "chain": "_0_2",
+    "index": 3,
+    "type": "nn.SpatialConvolution"
+  }, {
+    "chain": "_0_3",
+    "index": 4,
+    "type": "nn.SpatialMaxPooling"
+  }, {
+    "chain": "_0_4",
+    "index": 5,
+    "type": "nn.SpatialConvolution"
+  }, {
+    "chain": "_0_5",
+    "index": 6,
+    "type": "nn.SpatialMaxPooling"
+  }, {
+    "chain": "_0_6",
+    "index": 7,
+    "type": "nn.View"
+  }, {
+    "chain": "_0_7",
+    "index": 8,
+    "type": "nn.Linear"
+  }, {
+    "chain": "_0_8",
+    "index": 9,
+    "type": "nn.ReLU"
+  }, {
+    "chain": "_0_9",
+    "index": 10,
+    "type": "nn.Linear"
+  }, {
+    "chain": "_0_10",
+    "index": 11,
+    "type": "nn.LogSoftMax"
+  } ]
+}
