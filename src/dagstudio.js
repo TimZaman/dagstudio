@@ -915,7 +915,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     graph.updateGraph();
 
 
-    $.getJSON('caffe-all-layers.json', function(data) {         
+    $.getJSON('./tests/caffe-all-layers.json', function(data) {         
         graph.setLayerlistData(data);
     });
 
