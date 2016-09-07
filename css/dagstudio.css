@@ -1,0 +1,188 @@
+/* @TODO(tzaman) order the below stuff */
+
+#toolbox{
+    display:inline-block;
+    background:white;
+    border-radius: 5px 0px 0px 0px;
+    padding: 5px;
+    z-index: 5;
+    vertical-align: bottom;
+}
+
+#toolbox input{
+    width: 25px;
+    opacity: 0.4;
+}
+#toolbox input:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+#hidden-file-upload{
+    display: none;
+}
+
+#download-input{
+    margin: 0 0.5em;
+}
+
+.conceptG text{
+    pointer-events: none;
+}
+
+marker{
+    fill: Gray;
+}
+
+path.link {
+    fill: none;
+    stroke: Gray;
+    stroke-width: 3px;
+    cursor: default;
+}
+
+path.link:hover{
+    stroke: rgb(94, 196, 204);
+}
+
+g.connect-node circle{
+    fill: #BEFFFF;
+}
+
+path.link.hidden{
+    stroke-width: 0;
+}
+
+path.link.selected {
+    stroke: rgb(229, 172, 247);
+}
+
+#right-container {
+    height:100%;
+    position: absolute;
+    right:0;
+    top:0;
+}
+
+#floater {
+    height: 100%;
+    min-width: 35px;
+    background: dimgray;
+    display: inline-block;
+    z-index: 10;  
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#metadata {
+    height: calc(100% - 40px);
+    align: left;
+    margin:10px;
+}
+
+#toggle-metadata{
+    position: absolute;
+    width: 25px;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+}
+
+.metadatabox {
+    text-align: left;
+}
+
+#container {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    font-family: "Lucida Console";
+    font-size: 12px;
+
+    border: dotted 1px orange; /* just for debugging */
+    width:95%;
+    top:20px;
+    left:0px;
+    height: 500px;
+    margin:0; padding:0;
+    position: relative;
+}
+
+#chart {
+    background: #f2f2f2;
+    height: 100%;
+    width: calc(100% - 200px);
+    float:right;
+    top:0px;
+    margin:0; padding:0;
+}
+
+#layerlist {
+    height: 100%;
+    width: 200px;
+    left: 0px;
+    float:left;
+    margin:0; padding:0;
+    overflow-x: hidden;
+}
+
+.layerlist-normal {
+    background: #d9d9d9;
+    overflow-y: scroll;
+}
+
+.layerlist-trash {
+    background: #d9d9d9;
+    overflow: hidden;
+    background-image: url('../icons/trash.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#dragnode {
+    visibility: hidden;
+}
+
+.node-text {
+    fill: DimGray;
+    dominant-baseline: central;
+    text-anchor: left;
+    pointer-events: none;
+}
+
+.list-node-svg {
+    width: 200px;
+    height: calc(30px + 5px);
+    overflow: visible;
+}
+
+.node-rect {
+    stroke: #bfbfbf;
+    stroke-width: 2px;
+}
+
+.node-rect-normal {
+    fill: white;
+}
+
+.node-rect-selected {
+    fill: #e6f7ff;
+}
+
+
+/* the in and out connector circles  */
+.node-conn {
+    fill: white;
+    stroke-width: 1px;
+    stroke: #bfbfbf;
+}
+
+.node-conn-extended {
+    opacity: 0;
+}
+
+/* hover no workie? */
