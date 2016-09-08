@@ -156,7 +156,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                     console.log('dumping');
                     var selectedNode = thisGraph.state.selectedNode;
                     thisGraph.nodes.splice(thisGraph.nodes.indexOf(selectedNode), 1);
-                    thisGraph.spliceLinksForNode(selectedNode);
+                    thisGraph.removeLinksOfNode(selectedNode);
                     thisGraph.state.selectedNode = null;
                     thisGraph.updateGraph();
                     thisGraph.state.mouseDownNode = false;
@@ -300,6 +300,12 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             thisGraph.deleteGraph(false);
         });
 
+        // handle clean graph
+        d3.select("#cleanup-input").on("click", function(){
+            // @TODO(tzaman) clean up DAG by snapping to a grid.
+            alert("@TODO(tzaman) clean up DAG by snapping to a grid.");
+        });
+
         thisGraph.toggleMetadataBox(thisGraph.state.metadataboxExpand);
     };
 
@@ -371,15 +377,15 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     };
 
     // remove edges associated with a node
-    DagStudio.prototype.spliceLinksForNode = function(node) {
-      var thisGraph = this,
-          toSplice = thisGraph.edges.filter(function(l) {
-              return (l.source === node || l.target === node);
-          });
+    DagStudio.prototype.removeLinksOfNode = function(node) {
+        var thisGraph = this,
+        toSplice = thisGraph.edges.filter(function(l) {
+            return (l.source === node || l.target === node);
+        });
 
-      toSplice.map(function(l) {
-          thisGraph.edges.splice(thisGraph.edges.indexOf(l), 1);
-      });
+        toSplice.map(function(l) {
+            thisGraph.edges.splice(thisGraph.edges.indexOf(l), 1);
+        });
     };
 
     DagStudio.prototype.setupMetadata = function() {
@@ -505,7 +511,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     };
 
     // mousedown on node
-    DagStudio.prototype.drawnNodeMouseDown = function(d3node, d) { // when down on circle
+    DagStudio.prototype.drawnNodeMouseDown = function(d3node, d) { // when down on node
         console.log("prototype.drawnNodeMouseDown()");
         var thisGraph = this,
             state = thisGraph.state;
@@ -523,7 +529,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     };
 
     // mouseup on nodes
-    DagStudio.prototype.drawnNodeMouseUp = function(d3node, d) { // when lifted from circle
+    DagStudio.prototype.drawnNodeMouseUp = function(d3node, d) { // when lifted from node
         console.log("prototype.drawnNodeMouseUp()");
         var thisGraph = this,
             state = thisGraph.state,
@@ -540,14 +546,20 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
         if (mouseDownNode !== d){
             // we're in a different node: create new edge for mousedown edge and add to graph
+            console.log('current edges:');
+            console.log(thisGraph.edges);
             var newEdge = {source: mouseDownNode, target: d};
-            var filtRes = thisGraph.paths.filter(function(d){
-                if (d.source === newEdge.target && d.target === newEdge.source){
-                   thisGraph.edges.splice(thisGraph.edges.indexOf(d), 1);
+            console.log('newEdge:');
+            console.log(newEdge);
+            var filtRes = thisGraph.paths.filter(function(d) {
+                if ( (d.source === newEdge.target) && (d.target === newEdge.source) ){
+                    // Cyclical reference:
+                    //thisGraph.edges.splice(thisGraph.edges.indexOf(d), 1); // Removes existing one
+                    // @TODO(tzaman) Check if a bottom refence and top reference refer to the same object
                 }
-                return d.source === newEdge.source && d.target === newEdge.target;
+                return ((d.source === newEdge.source) && (d.target === newEdge.target));
             });
-            if (!filtRes[0].length){
+            if (!filtRes[0].length) {
                 thisGraph.edges.push(newEdge);
                 thisGraph.updateGraph();
             }
@@ -619,12 +631,12 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             selectedEdge = state.selectedEdge;
 
         switch(d3.event.keyCode) {
-        //case consts.BACKSPACE_KEY:
+        case consts.BACKSPACE_KEY:
         case consts.DELETE_KEY:
             d3.event.preventDefault(); //@TODO(tzaman) : figure out what this does.
             if (selectedNode) {
                 thisGraph.nodes.splice(thisGraph.nodes.indexOf(selectedNode), 1);
-                thisGraph.spliceLinksForNode(selectedNode);
+                thisGraph.removeLinksOfNode(selectedNode);
                 state.selectedNode = null;
                 thisGraph.updateGraph();
             } else if (selectedEdge) {
@@ -785,7 +797,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             return false;
         }
         var bbox = theNode.getBoundingClientRect();
-        console.log(bbox);
         if (mouseCoords[0] > bbox.width || mouseCoords[1] > bbox.height) {
             return false;
         }
