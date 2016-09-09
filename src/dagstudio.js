@@ -10,7 +10,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     // define DagStudio object
     var DagStudio = function(svg, nodes, edges){
         var thisGraph = this;
-            thisGraph.idct = 0;
         
         thisGraph.nodes = nodes || [];
         thisGraph.edges = edges || [];
@@ -19,6 +18,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         thisGraph.consts.nodeWidth =  thisGraph.consts.containerWidth - (thisGraph.consts.nodeXpad * 2) - thisGraph.consts.scrollbarWidth;
         thisGraph.consts.offsetConnIn = [thisGraph.consts.nodeWidth / 2, thisGraph.consts.nodeYpad / 2];
         thisGraph.consts.offsetConnOut = [thisGraph.consts.nodeWidth / 2, thisGraph.consts.nodeHeight + thisGraph.consts.nodeYpad / 2],
+        thisGraph.consts.nodeAspectRatio = thisGraph.consts.nodeWidth / thisGraph.consts.nodeHeight;
 
         thisGraph.state = {
             selectedNode: null,
@@ -133,15 +133,14 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
                         var layerId = thisGraph.state.draggingNodeId,
                             nodeInfo = thisGraph.state.layerlistdata[layerId],
-                            placeholderName = 'L' + thisGraph.idct,
+                            placeholderName = genUniqueSequenceIdFromObjs(thisGraph.nodes, 'L'),
                             xsub = d3.select("#dragnode").node().getBBox().width / 2,
                             ysub = d3.select("#dragnode").node().getBBox().height / 2;
 
                         var xycoords = d3.mouse(thisGraph.svgG.node()),
                             d = {
-                                id: thisGraph.idct++,
                                 type: nodeInfo.type,
-                                name: placeholderName,
+                                id: placeholderName,
                                 param: '',
                                 type_param: '',
                                 x: xycoords[0] - xsub,
@@ -246,7 +245,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         d3.select("#download-input").on("click", function(){
             var saveEdges = [];
             thisGraph.edges.forEach(function(val, i){
-               saveEdges.push({source: val.source.id, target: val.target.id});
+               saveEdges.push({source: val.source.id, target: val.target.id, id:val.id});
             });
             var blob = new Blob([window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges})], {type: "text/plain;charset=utf-8"});
             saveAs(blob, "mydag.json");
@@ -269,11 +268,12 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                         var jsonObj = JSON.parse(txtRes);
                         thisGraph.deleteGraph(true);
                         thisGraph.nodes = jsonObj.nodes;
-                        thisGraph.setIdCt(jsonObj.nodes.length + 1);
                         var newEdges = jsonObj.edges;
                         newEdges.forEach(function(e, i){
-                          newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
-                                      target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
+                            newEdges[i] = {source: thisGraph.nodes.filter(function(n){ return n.id == e.source; })[0],
+                                           target: thisGraph.nodes.filter(function(n){ return n.id == e.target; })[0],
+                                           id: e.id
+                                      };
                         });
                         thisGraph.edges = newEdges;
                         thisGraph.updateGraph();
@@ -302,17 +302,61 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
         // handle clean graph
         d3.select("#cleanup-input").on("click", function(){
-            // @TODO(tzaman) clean up DAG by snapping to a grid.
-            alert("@TODO(tzaman) clean up DAG by snapping to a grid.");
+            // Reformat edges to refer to id only
+            var edgeRefs = [];
+            thisGraph.edges.forEach(function(val, i){
+               edgeRefs.push({source: val.source.id, target: val.target.id, id:val.id});
+            });
+
+            var graph = {
+              "id": "root",
+              "properties": {
+                  direction: "DOWN", spacing: 50
+              },
+              "children": thisGraph.nodes,
+              "edges": edgeRefs 
+            };
+
+            $klay.layout({
+                graph: graph,
+                /*options: { spacing : 300},*/
+                success: function(layouted) {
+                    // Finally expand the widths with aspect ratio (widen)
+                    //  [workaround since klay's AR doesnt work, and I dont want to bloat my objs with height and width attrs]
+                    thisGraph.nodes.forEach(function(val, i){
+                       val.x = val.x * thisGraph.consts.nodeAspectRatio/1.5;
+                    });
+                    thisGraph.updateGraph();
+                    console.log(layouted);
+                },
+                error: function(error) { console.log(error); }
+            });
+
+
+            
         });
 
         thisGraph.toggleMetadataBox(thisGraph.state.metadataboxExpand);
     };
 
-    DagStudio.prototype.setIdCt = function(idct){
-        this.idct = idct;
-    };
-
+    function genUniqueSequenceIdFromObjs(arr, prefix) {
+        // Generates a unique sequence id from an object list with id keys
+        console.log('genUniqueSequenceIdFromObjs');
+        console.log(arr);
+        var i;
+        var idlist = [];
+        for (i in arr) {
+            idlist.push(arr[i].id);
+        }
+        var idCandidate = prefix + 0; // Template
+        for (i in arr) {
+            idCandidate = prefix + (1+parseInt(i)); // Template
+            if (!idlist.includes(idCandidate)){
+                break;
+            }
+        }
+        return idCandidate;
+    }
 
     DagStudio.prototype.toggleMetadataBox = function(expand) {
         var vis = expand ? 'visible' : 'hidden'
@@ -345,6 +389,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         nodeWidth : null,     // computed from other constants in ctor
         offsetConnIn : null,  // computed from other constants in ctor
         offsetConnOut : null, // computed from other constants in ctor
+        nodeAspectRatio: null
     };
 
     // PROTOTYPES
@@ -409,7 +454,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     }
 
     function makeNodeTitle(d) {
-        return d.type + "(" + d.name + ")";
+        return d.type + "(" + d.id + ")";
     }
 
     DagStudio.prototype.fillMetadata = function(d3Node, d) {
@@ -420,9 +465,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         metadatabox.select("#type").text(d.type);
 
         metadatabox.select("#name")
-            .property("value", d.name)
+            .property("value", d.id)
             .on("input", function() {
-                d.name = this.value;
+                d.id = this.value;
                 d3Node.select("text").text(makeNodeTitle(d));
             });
 
@@ -483,7 +528,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         if (thisGraph.state.selectedEdge == null) {
             return;
         }
-        thisGraph.paths.filter(function(cd){
+        thisGraph.paths.filter(function(cd) {
                 return cd === thisGraph.state.selectedEdge;
             }).classed(thisGraph.consts.selectedClass, false);
         thisGraph.state.selectedEdge = null;
@@ -548,7 +593,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             // we're in a different node: create new edge for mousedown edge and add to graph
             console.log('current edges:');
             console.log(thisGraph.edges);
-            var newEdge = {source: mouseDownNode, target: d};
+            var newEdge = {source: mouseDownNode, target: d, id: genUniqueSequenceIdFromObjs(thisGraph.edges, 'E')};
             console.log('newEdge:');
             console.log(newEdge);
             var filtRes = thisGraph.paths.filter(function(d) {
@@ -909,11 +954,12 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         height =  divEl.offsetHeight;
 
     // initial node data
-    var nodes = [{type: 'Convolution', name: 'conv1', param: '', type_param: '', id: 0, x: 100, y: 100},
-                 {type: 'Pooling',     name: 'pool1', param: '', type_param: '', id: 1, x: 100, y: 300}];
-    var edges = [{source: nodes[0], target: nodes[1]}];
-
-
+    var nodes = [{type: 'Convolution', id: 'conv1', param: '', type_param: '', x: 0, y: 0},
+                 {type: 'Pooling',     id: 'pool1', param: '', type_param: '', x: 0, y: 200},
+                 {type: 'Fooling',     id: 'fool1', param: '', type_param: '', x: 100, y: 100}];
+    var edges = [{id: 'E0', source: nodes[0], target: nodes[1]},
+                 {id: 'E1', source: nodes[0], target: nodes[2]},
+                 {id: 'E2', source: nodes[2], target: nodes[1]}];
 
     // Chart SVG
 
@@ -922,7 +968,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         .attr("width", width)
         .attr("height", height);
     var graph = new DagStudio(svg, nodes, edges);
-        graph.setIdCt(2);
     graph.updateGraph();
 
 
